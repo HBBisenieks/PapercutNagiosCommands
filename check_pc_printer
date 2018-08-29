@@ -48,14 +48,10 @@ info = status
 if status == 'OFFLINE':
     exitCode = 2
     info = 'Printer offline'
-elif status == 'PAPER_JAM':
+else:
     if not args.on_off_only:
         exitCode = 1
-        info = 'Paper jam'
-else:
-    if status != 'OK':
-        exitCode = 3
-        info = 'Unknown status'
+        info = status
 
 print str(exitCode) + "|" + info + "\n"
 
