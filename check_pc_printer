@@ -46,8 +46,9 @@ elif status == 'PAPER_JAM':
         exitCode = 1
         info = 'Paper jam'
 else:
-    exitCode = 3
-    info = 'Unknown status'
+    if status != 'OK':
+        exitCode = 3
+        info = 'Unknown status'
 
 print str(exitCode) + "|" + info + "\n"
 
