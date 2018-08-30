@@ -49,7 +49,7 @@ if status == 'OFFLINE':
     exitCode = 2
     info = 'Printer offline'
 else:
-    if not args.on_off_only:
+    if status != 'OK' and not args.on_off_only:
         exitCode = 1
         info = status
 
