@@ -43,7 +43,7 @@ status = perfData['status']
 
 # Assume normal status unless otherwise specified
 exitCode = 0
-info = status
+info = 'Printer OK'
 
 if status == 'OFFLINE':
     exitCode = 2
@@ -53,6 +53,6 @@ else:
         exitCode = 1
         info = status
 
-print str(exitCode) + "|" + info + "\n"
+print status + "|" + info + "\n"
 
 exit(exitCode)
