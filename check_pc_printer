@@ -1,22 +1,36 @@
 #!/usr/bin/python
 
-import argparse, urllib, json
+import argparse
+import urllib
+import json
 
 SERVER = ''
 KEY = ''
 PRINTERS = '/api/health/printers/'
 PROTOCOL = 'http://'
 
-description = "Check health of a printer in Papercut. With -O flag, only report errors if printer is offline, without -O, WARNING state is returned for any printer problem, such as a paper jam. CRITICAL status is reserved for offline printers."
-epilog = "\nFor bug reports or feature requests or suggestions, please visit https://github.com/HBBisenieks/PapercutNagiosCommands"
+description = """Check health of a printer in Papercut. With -O flag, only
+                 report errors if printer is offline, without -O, WARNING state
+                 is returned for any printer problem, such as a paper jam.
+                 CRITICAL status is reserved for offline printers."""
+epilog = """\nFor bug reports or feature requests or suggestions, please visit
+                 https://github.com/HBBisenieks/PapercutNagiosCommands"""
 
-parser = argparse.ArgumentParser(description = description,epilog = epilog)
-parser.add_argument('--host','-H',type = str,help = 'Host address',required=True)
-parser.add_argument('--printer','-p',type = str,help = 'Printer ID',required=True)
-parser.add_argument('--key','-k',type = str,help = 'API authorization key',required=True)
-parser.add_argument('--on_off_only','-O',action = 'store_true',help = 'Only report whether the printer is online or offline and omit all other performance data')
-parser.add_argument('--secure','-S',action = 'store_true',help = 'Connect over HTTPS')
-parser.add_argument('--debug',action = 'store_true',help = 'Print raw JSON data from API to diagnose problems in the Papercut environment. Should not be used in production.')
+parser = argparse.ArgumentParser(description=description, epilog=epilog)
+parser.add_argument('--host', '-H', type=str, help='Host address',
+                    required=True)
+parser.add_argument('--printer', '-p', type=str, help='Printer ID',
+                    required=True)
+parser.add_argument('--key', '-k', type=str, help='API authorization key',
+                    required=True)
+parser.add_argument('--on_off_only', '-O', action='store_true', help="""Only
+                      report whether the printer is online or offline and omit
+                      all other performance data""")
+parser.add_argument('--secure', '-S', action='store_true',
+                    help='Connect over HTTPS')
+parser.add_argument('--debug', action='store_true', help="""Print raw JSON data
+                    from API to diagnose problems in the Papercut environment.
+                     Should not be used in production.""")
 
 args = parser.parse_args()
 
@@ -29,10 +43,12 @@ if args.secure:
 
 url = PROTOCOL + SERVER + PRINTERS + printerId + '/status?Authorization=' + KEY
 
+
 def load(url):
     response = urllib.urlopen(url)
     data = json.loads(response.read())
     return data
+
 
 perfData = load(url)
 
